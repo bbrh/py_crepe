@@ -9,7 +9,7 @@ import py_crepe
 import datetime
 import numpy as np
 import data_helpers
-np.random.seed(0123)  # for reproducibility
+np.random.seed(123)  # for reproducibility
 
 # set parameters:
 
