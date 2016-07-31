@@ -21,7 +21,8 @@ model_name_path = 'params/crepe_model.json'
 model_weights_path = 'params/crepe_model_weights.h5'
 
 #Maximum length. Longer gets chopped. Shorter gets padded.
-maxlen = 1014
+maxlen = 5000
+# maxlen = 1014
 
 #Model params
 #Filters for conv layers
@@ -31,7 +32,7 @@ dense_outputs = 1024
 #Conv layer kernel size
 filter_kernels = [7, 7, 3, 3, 3, 3]
 #Number of units in the final output layer. Number of classes.
-cat_output = 4
+cat_output = 10
 
 #Compile/fit params
 batch_size = 80
