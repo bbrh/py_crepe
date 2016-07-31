@@ -4,30 +4,33 @@ import pandas as pd
 from keras.utils.np_utils import to_categorical
 
 
-def load_ag_data():
-    train = pd.read_csv('data/ag_news_csv/train.csv', header=None)
-    train = train.dropna()
+def read_data_file(fname):
 
-    x_train = train[1] + train[2]
-    x_train = np.array(x_train)
+    content = pd.read_csv(fname, header=None, index_col=False)
+    content.dropna(inplace=True)
+    content.reset_index(inplace=True, drop=True)
 
-    y_train = train[0] - 1
-    y_train = to_categorical(y_train)
+    x = content[4]
+    x = np.array(x)
 
-    test = pd.read_csv('data/ag_news_csv/test.csv', header=None)
-    x_test = test[1] + test[2]
-    x_test = np.array(x_test)
+    y = content[0] - 1
+    y = to_categorical(y)
 
-    y_test = test[0] - 1
-    y_test = to_categorical(y_test)
+    return (x, y)
 
-    return (x_train, y_train), (x_test, y_test)
+
+def load_restoclub_data():
+
+    train_data = read_data_file('data/train.csv')
+    test_data = read_data_file('data/test.csv')
+
+    return train_data, test_data
 
 
 def mini_batch_generator(x, y, vocab, vocab_size, vocab_check, maxlen,
                          batch_size=128):
 
-    for i in xrange(0, len(x), batch_size):
+    for i in range(0, len(x), batch_size):
         x_sample = x[i:i + batch_size]
         y_sample = y[i:i + batch_size]
 
@@ -76,8 +79,11 @@ def create_vocab_set():
     #This alphabet is 69 chars vs. 70 reported in the paper since they include two
     # '-' characters. See https://github.com/zhangxiangxiao/Crepe#issues.
 
-    alphabet = (list(string.ascii_lowercase) + list(string.digits) +
+    alphabet = (['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'ё', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю'] +
+                list(string.digits) +
                 list(string.punctuation) + ['\n'])
+    # alphabet = (list(string.ascii_lowercase) + list(string.digits) +
+    #             list(string.punctuation) + ['\n'])
     vocab_size = len(alphabet)
     check = set(alphabet)
 

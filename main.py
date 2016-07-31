@@ -40,7 +40,7 @@ nb_epoch = 10
 print('Loading data...')
 #Expect x to be a list of sentences. Y to be a one-hot encoding of the
 #categories.
-(xt, yt), (x_test, y_test) = data_helpers.load_ag_data()
+(xt, yt), (x_test, y_test) = data_helpers.load_restoclub_data()
 
 print('Creating vocab...')
 vocab, reverse_vocab, vocab_size, check = data_helpers.create_vocab_set()
@@ -54,7 +54,7 @@ model = py_crepe.model(filter_kernels, dense_outputs, maxlen, vocab_size,
 
 print('Fit model...')
 initial = datetime.datetime.now()
-for e in xrange(nb_epoch):
+for e in range(nb_epoch):
     xi, yi = data_helpers.shuffle_matrix(xt, yt)
     xi_test, yi_test = data_helpers.shuffle_matrix(x_test, y_test)
     if subset:
