@@ -10,7 +10,7 @@ def read_data_file(fname):
     content.dropna(inplace=True)
     content.reset_index(inplace=True, drop=True)
 
-    x = content[4]
+    x = content[1]
     x = np.array(x)
 
     y = content[0] - 1
